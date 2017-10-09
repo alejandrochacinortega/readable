@@ -15,9 +15,7 @@ class Main extends Component {
     return this.props.allCategories.map((category, index) => {
       return (
         <div key={index}>
-          <Link to={`category/${category.get('path')}`}>
-            {category.get('name')}
-          </Link>
+          <Link to={`${category.get('path')}`}>{category.get('name')}</Link>
           <br />
         </div>
       );

@@ -12,7 +12,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <Route path={'/'} exact render={() => <Main />} />
-        <Route path={'/category'} exact render={() => <Category />} />
+        <Route
+          path={'/:category'}
+          exact
+          render={props => <Category {...props} />}
+        />
         <Route path={'/postDetail'} exact render={() => <PostDetail />} />
         <Route path={'/createPost'} exact render={() => <CreatePost />} />
       </div>

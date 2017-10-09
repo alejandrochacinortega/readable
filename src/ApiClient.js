@@ -9,6 +9,9 @@ export const getCategories = () =>
     .then(res => res.json())
     .then(data => data.categories);
 
+export const getPostsByCategory = category =>
+  fetch(`${ROOT_URL}/${category}/posts`, { headers }).then(res => res.json());
+
 // export const update = (book, shelf) =>
 //   fetch(`${api}/books/${book.id}`, {
 //     method: 'PUT',
