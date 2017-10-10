@@ -13,12 +13,11 @@ class App extends React.Component {
       <div className="App">
         <Route path={'/'} exact render={() => <Main />} />
         <Route
-          path={'/:category'}
-          exact
+          path={'/category/:category'}
           render={props => <Category {...props} />}
         />
-        <Route path={'/postDetail'} exact render={() => <PostDetail />} />
-        <Route path={'/createPost'} exact render={() => <CreatePost />} />
+        <Route path={'/postDetail'} render={() => <PostDetail />} />
+        <Route path={'/createPost'} render={() => <CreatePost />} />
       </div>
     );
   }

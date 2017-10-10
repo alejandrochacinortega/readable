@@ -8,10 +8,13 @@ import {
   GET_CATEGORIES_FAILED,
   GET_CATEGORY,
   GET_CATEGORY_SUCCESS,
+} from '../dux/categories.js';
+
+import {
   GET_POSTS_OF_CURRENT_CATEGORY,
   GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
   GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
-} from '../actions';
+} from '../dux/posts';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
 function* getCategories() {

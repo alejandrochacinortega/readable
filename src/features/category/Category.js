@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getCategory } from '../../actions';
+
+import ListItem from './components/listItem';
 
 class Category extends Component {
   componentDidMount() {
@@ -10,11 +13,23 @@ class Category extends Component {
     });
   }
 
+  renderPosts = () => {
+    const { postsOfCurrentCategory } = this.props;
+    return (
+      <div>
+        {postsOfCurrentCategory.map(post => {
+          return <ListItem post={post} key={post.get('id')} />;
+        })}
+      </div>
+    );
+  };
+
   render() {
     return (
       <div>
         <h1>Category {this.props.match.params.category}</h1>
-        <p>{JSON.stringify(this.props.postsOfCurrentCategory)}</p>
+        <Link to={'/createPost'}>Add post</Link>
+        {this.renderPosts()}
       </div>
     );
   }

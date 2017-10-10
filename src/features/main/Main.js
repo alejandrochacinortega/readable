@@ -15,7 +15,9 @@ class Main extends Component {
     return this.props.allCategories.map((category, index) => {
       return (
         <div key={index}>
-          <Link to={`${category.get('path')}`}>{category.get('name')}</Link>
+          <Link to={`category/${category.get('path')}`}>
+            {category.get('name')}
+          </Link>
           <br />
         </div>
       );
@@ -31,6 +33,7 @@ class Main extends Component {
     return (
       <div>
         <h1>Test Componentss</h1>
+        <Link to={'/createPost'}>Create new post</Link>
         {this.renderCategories()}
       </div>
     );

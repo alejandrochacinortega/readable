@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import categoriesReducer from './categories_reducer';
-import postsReducer from './posts_reducer';
+import categories from '../dux/categories';
+import posts from '../dux/posts';
 
 const rootReducer = combineReducers({
-  categories: categoriesReducer,
-  posts: postsReducer,
+  categories,
+  posts,
 });
 
 export default rootReducer;
