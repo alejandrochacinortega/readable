@@ -8,8 +8,9 @@ import {
   GET_CATEGORIES_FAILED,
   GET_CATEGORY,
   GET_CATEGORY_SUCCESS,
-  GET_CATEGORY_FAILED,
-  GET_POSTS_BY_CATEGORY_SUCCESS,
+  GET_POSTS_OF_CURRENT_CATEGORY,
+  GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
+  GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
 } from '../actions';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
@@ -23,12 +24,18 @@ function* getCategories() {
 }
 
 function* getCategory({ category }) {
-  const postsByCategory = yield ApiClient.getPostsByCategory(category);
+  const postsOfCurrentCategory = yield ApiClient.getPostsByCategory(category);
   try {
     yield put({ type: GET_CATEGORY_SUCCESS, category });
-    yield put({ type: GET_POSTS_BY_CATEGORY_SUCCESS, postsByCategory });
+    yield put({
+      type: GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
+      postsOfCurrentCategory,
+    });
   } catch (e) {
-    yield put({ type: GET_CATEGORY_FAILED, message: e.message });
+    yield put({
+      type: GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
+      message: e.message,
+    });
   }
 }
 

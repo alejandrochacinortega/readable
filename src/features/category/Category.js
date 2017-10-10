@@ -14,7 +14,7 @@ class Category extends Component {
     return (
       <div>
         <h1>Category {this.props.match.params.category}</h1>
-        <p>{JSON.stringify(this.props.postsByCategory)}</p>
+        <p>{JSON.stringify(this.props.postsOfCurrentCategory)}</p>
       </div>
     );
   }
@@ -23,7 +23,7 @@ class Category extends Component {
 function mapStateToProps({ categories, posts }) {
   return {
     currentCategory: categories.get('currentCategory'),
-    postsByCategory: posts.get('postsByCategory'),
+    postsOfCurrentCategory: posts.get('postsOfCurrentCategory'),
   };
 }
 

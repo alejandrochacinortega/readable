@@ -16,7 +16,7 @@ export default function(state = initialState, action) {
     case GET_CATEGORIES_SUCCESS:
       return state.setIn(['allCategories'], fromJS(action.categories));
     case GET_CATEGORY_SUCCESS:
-      return state.set('currentCategory', action.category);
+      return state.set('currentCategory', fromJS(action.category));
     default:
       return state;
   }
