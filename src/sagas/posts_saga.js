@@ -10,7 +10,10 @@ import {
 } from '../dux/posts.js';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
-function* addNewPost({ post, category }) {
+function* addNewPost({ fields }) {
+  console.log('====================================');
+  console.log('Fields saga ', fields);
+  console.log('====================================');
   // Add
   // const categories = yield ApiClient.getCategories();
   // try {
@@ -36,8 +39,8 @@ function* watchAddNewPost() {
  dispatched while a fetch is already pending, that pending fetch is cancelled
  and only the latest one will be run.
  */
-function* mySaga() {
+function* postsSaga() {
   yield fork(watchAddNewPost);
 }
 
-export default mySaga;
+export default postsSaga;

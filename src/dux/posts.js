@@ -9,11 +9,10 @@ export const ADD_NEW_POST = 'ADD_NEW_POST';
 export const ADD_NEW_POST_SUCCESS = 'ADD_NEW_POST_SUCCESS';
 export const ADD_NEW_POST_FAILED = 'ADD_NEW_POST_FAILED';
 
-export function addNewPost(post, category) {
+export function addNewPost(fields) {
   return {
     type: ADD_NEW_POST,
-    post,
-    category,
+    fields,
   };
 }
 
