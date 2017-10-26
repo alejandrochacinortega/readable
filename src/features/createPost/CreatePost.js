@@ -26,7 +26,9 @@ class CreatePost extends Component {
     this.setState({ voteScore: event.target.value });
 
   handleSubmit = event => {
-    event.preventDefault();
+    const { currentCategory } = this.props;
+
+    currentCategory;
     const { title, body, author, voteScore } = this.state;
     const fields = {
       id: Date.now(),
@@ -34,7 +36,7 @@ class CreatePost extends Component {
       title,
       body,
       author,
-      category: 'react',
+      category: currentCategory,
       voteScore,
     };
     this.props.addNewPost(fields);
@@ -86,4 +88,10 @@ class CreatePost extends Component {
   }
 }
 
-export default connect(null, { addNewPost })(CreatePost);
+function mapStateToProps({ categories }) {
+  return {
+    currentCategory: categories.get('currentCategory'),
+  };
+}
+
+export default connect(mapStateToProps, { addNewPost })(CreatePost);
