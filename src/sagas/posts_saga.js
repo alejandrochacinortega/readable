@@ -14,8 +14,10 @@ function* addNewPost({ fields }) {
   console.log('====================================');
   console.log('Fields saga ', fields);
   console.log('====================================');
-  // Add
-  // const categories = yield ApiClient.getCategories();
+  const comingData = yield ApiClient.addNewPost(fields);
+  console.log('====================================');
+  console.log('Coming data ', comingData);
+  console.log('====================================');
   // try {
   //   yield put({ type: GET_CATEGORIES_SUCCESS, categories });
   // } catch (e) {
