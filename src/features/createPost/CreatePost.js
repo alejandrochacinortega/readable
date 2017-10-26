@@ -26,6 +26,7 @@ class CreatePost extends Component {
     this.setState({ voteScore: event.target.value });
 
   handleSubmit = event => {
+    event.preventDefault();
     const { currentCategory } = this.props;
 
     currentCategory;
@@ -39,7 +40,9 @@ class CreatePost extends Component {
       category: currentCategory,
       voteScore,
     };
-    this.props.addNewPost(fields);
+    this.props.addNewPost(fields, () => {
+      console.log('Send user to main page');
+    });
   };
 
   render() {

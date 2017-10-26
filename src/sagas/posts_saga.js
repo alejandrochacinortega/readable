@@ -10,7 +10,7 @@ import {
 } from '../dux/posts.js';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
-function* addNewPost({ fields }) {
+function* addNewPost({ fields, callback }) {
   console.log('====================================');
   console.log('Fields saga ', fields);
   console.log('====================================');
@@ -18,6 +18,7 @@ function* addNewPost({ fields }) {
   console.log('====================================');
   console.log('Coming data ', comingData);
   console.log('====================================');
+  callback();
   // try {
   //   yield put({ type: GET_CATEGORIES_SUCCESS, categories });
   // } catch (e) {
