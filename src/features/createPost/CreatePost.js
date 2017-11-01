@@ -41,7 +41,7 @@ class CreatePost extends Component {
       voteScore,
     };
     this.props.addNewPost(fields, () => {
-      console.log('Send user to main page');
+      this.props.history.push('/');
     });
   };
 
