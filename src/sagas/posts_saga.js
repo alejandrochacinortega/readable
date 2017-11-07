@@ -4,12 +4,24 @@ import { fork, put } from 'redux-saga/effects';
 import * as ApiClient from '../ApiClient';
 
 import {
+  GET_POSTS,
+  GET_POSTS_FAILED,
+  GET_POSTS_SUCCESS,
   ADD_NEW_POST,
   ADD_NEW_POST_SUCCESS,
   ADD_NEW_POST_FAILED,
 } from '../dux/posts.js';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
+function* getPosts() {
+  const posts = yield ApiClient.getPosts();
+  try {
+    yield put({ type: GET_POSTS_SUCCESS, posts });
+  } catch (e) {
+    yield put({ type: GET_POSTS_FAILED, message: e.message });
+  }
+}
+
 function* addNewPost({ fields, callback }) {
   console.log('====================================');
   console.log('Fields saga ', fields);
@@ -31,6 +43,10 @@ function* addNewPost({ fields, callback }) {
  Allows concurrent fetches of user.
  */
 
+function* watchGetPosts() {
+  yield takeEvery(GET_POSTS, getPosts);
+}
+
 function* watchAddNewPost() {
   yield takeEvery(ADD_NEW_POST, addNewPost);
 }
@@ -43,6 +59,7 @@ function* watchAddNewPost() {
  and only the latest one will be run.
  */
 function* postsSaga() {
+  yield fork(watchGetPosts);
   yield fork(watchAddNewPost);
 }
 
