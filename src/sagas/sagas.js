@@ -28,9 +28,7 @@ function* getCategories() {
 
 function* getCategory({ category }) {
   const postsOfCurrentCategory = yield ApiClient.getPostsByCategory(category);
-  console.log('====================================');
-  console.log('postsOfCurrentCategory ', postsOfCurrentCategory);
-  console.log('====================================');
+
   try {
     yield put({ type: GET_CATEGORY_SUCCESS, category });
     yield put({

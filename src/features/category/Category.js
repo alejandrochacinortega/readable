@@ -18,7 +18,16 @@ class Category extends Component {
     return (
       <div>
         {postsOfCurrentCategory.map(post => {
-          return <ListItem post={post} key={post.get('id')} />;
+          return (
+            <Link
+              to={{
+                pathname: `/postDetail/${post.get('id')}`,
+                state: { post: post },
+              }}
+            >
+              <ListItem post={post} key={post.get('id')} />
+            </Link>
+          );
         })}
       </div>
     );
@@ -28,7 +37,9 @@ class Category extends Component {
     return (
       <div>
         <h1>Category {this.props.match.params.category}</h1>
-        <Link to={'/createPost'}>Add post</Link>
+        <Link to={`/createPost/${this.props.match.params.category}`}>
+          Add post
+        </Link>
         {this.renderPosts()}
       </div>
     );

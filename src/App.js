@@ -18,8 +18,16 @@ class App extends React.Component {
         />
         <Route path={'/postDetail'} render={() => <PostDetail />} />
         <Route
-          path={'/createPost'}
+          path={'/createPost/'}
           render={props => <CreatePost {...props} />}
+        />
+        <Route
+          path={'/createPost/:category'}
+          render={props => <CreatePost {...props} />}
+        />
+        <Route
+          path={'/postDetail/:post'}
+          render={props => <PostDetail {...props} />}
         />
       </div>
     );

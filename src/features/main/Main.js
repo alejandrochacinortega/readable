@@ -28,9 +28,6 @@ class Main extends Component {
 
   renderPosts = () => {
     // Fix link to posts details
-    console.log('====================================');
-    console.log(this.props.allPosts.toJS());
-    console.log('====================================');
     return this.props.allPosts
       .sortBy(item => item.get('voteScore'))
       .reverse()
@@ -56,9 +53,8 @@ class Main extends Component {
     return (
       <div>
         <h1>Test Componentss</h1>
-        <Link to={'/createPost'}>Create new post</Link>
+        <Link to={'/createPost/'}>Create new post</Link>
         {this.renderCategories()}
-        ///////////////
         {this.renderPosts()}
       </div>
     );
