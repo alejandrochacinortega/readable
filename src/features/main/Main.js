@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllCategories } from '../../actions';
 import { getAllPosts } from '../../dux/posts';
+import { Button } from 'react-bootstrap';
 
 class Main extends Component {
   componentDidMount() {
@@ -53,7 +54,11 @@ class Main extends Component {
     return (
       <div>
         <h1>Test Componentss</h1>
-        <Link to={'/createPost/'}>Create new post</Link>
+
+        <Link to={'/createPost/'}>
+          <Button bsStyle="primary">Create new post</Button>
+        </Link>
+
         {this.renderCategories()}
         {this.renderPosts()}
       </div>
