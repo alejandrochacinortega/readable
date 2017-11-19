@@ -5,7 +5,6 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 import { getAllCategories } from '../../actions';
 import { getAllPosts } from '../../dux/posts';
@@ -32,24 +31,6 @@ class Main extends Component {
     });
   };
 
-  renderPosts = () => {
-    // Fix link to posts details
-    return this.props.allPosts
-      .sortBy(item => item.get('voteScore'))
-      .reverse()
-      .map((post, index) => {
-        return (
-          <div key={index}>
-            <Link to={`category/${post.get('path')}`}>
-              {post.get('title')} - votes:
-              {post.get('voteScore')}
-            </Link>
-            <br />
-          </div>
-        );
-      });
-  };
-
   formatDate = timestamp => {
     return moment(new Date(timestamp)).format('MMM Do YY');
   };
@@ -71,7 +52,7 @@ class Main extends Component {
     const columns = [
       {
         Header: 'Title',
-        accessor: 'title', // String-based value accessors!
+        accessor: 'title',
       },
       {
         Header: 'Author',
@@ -108,12 +89,14 @@ class Main extends Component {
         <Link to={'/createPost/'}>
           <Button bsStyle="primary">Create new post</Button>
         </Link>
-        <ReactTable data={data} columns={columns} />
-
         <h3>Categories</h3>
         {this.renderCategories()}
-        <h3>Votes</h3>
-        {this.renderPosts()}
+        <ReactTable
+          data={data}
+          columns={columns}
+          defaultPageSize={5}
+          minRows={2}
+        />
       </div>
     );
   }
