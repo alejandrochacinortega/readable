@@ -14,7 +14,7 @@ class CreatePost extends Component {
       body: props.body || '',
       author: props.author || '',
       voteScore: props.voteScore || '',
-      category: props.category || '',
+      category: props.currentCategory || null,
     };
   }
 
@@ -87,25 +87,27 @@ class CreatePost extends Component {
               onChange={this.handleAuthorChange}
             />
           </label>
-          <label>
-            Category:
-            <select
-              value={this.state.category}
-              onChange={this.handleCategoryChange}
-            >
-              <option value="" disabled>
-                Select category
-              </option>
-              {this.props.allCategories.map(category => {
-                const name = category.get('name');
-                return (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                );
-              })}
-            </select>
-          </label>
+          {!this.state.category && (
+            <label>
+              Category:
+              <select
+                value={this.state.category}
+                onChange={this.handleCategoryChange}
+              >
+                <option value="" disabled>
+                  Select category
+                </option>
+                {this.props.allCategories.map(category => {
+                  const name = category.get('name');
+                  return (
+                    <option key={name} value={name}>
+                      {name}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+          )}
 
           <button>Create Post</button>
         </form>

@@ -5,16 +5,17 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { getAllCategories } from '../../dux/categories';
+import { getAllCategories, getCategory } from '../../dux/categories';
 import { getAllPosts } from '../../dux/posts';
 import { formatDate } from '../../utils/numbers';
 
 class Main extends Component {
   componentDidMount() {
-    const { getAllCategories, getAllPosts } = this.props;
+    const { getAllCategories, getAllPosts, getCategory } = this.props;
     setTimeout(() => {
       getAllCategories();
       getAllPosts();
+      getCategory(null);
     });
   }
 
@@ -108,4 +109,5 @@ function mapStateToProps({ categories, posts }) {
 export default connect(mapStateToProps, {
   getAllCategories,
   getAllPosts,
+  getCategory,
 })(Main);
