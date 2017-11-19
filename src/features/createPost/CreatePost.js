@@ -14,7 +14,8 @@ class CreatePost extends Component {
       body: props.body || '',
       author: props.author || '',
       voteScore: props.voteScore || '',
-      category: props.currentCategory || null,
+      shouldShowCategory: props.match.params.category,
+      category: props.match.params.category,
     };
   }
 
@@ -87,14 +88,14 @@ class CreatePost extends Component {
               onChange={this.handleAuthorChange}
             />
           </label>
-          {!this.state.category && (
+          {!this.state.shouldShowCategory && (
             <label>
               Category:
               <select
                 value={this.state.category}
                 onChange={this.handleCategoryChange}
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Select category
                 </option>
                 {this.props.allCategories.map(category => {
