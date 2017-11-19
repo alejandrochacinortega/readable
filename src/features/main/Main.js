@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import { getAllCategories } from '../../dux/categories';
 import { getAllPosts } from '../../dux/posts';
+import { formatDate } from '../../utils/numbers';
 
 class Main extends Component {
   componentDidMount() {
@@ -29,10 +29,6 @@ class Main extends Component {
         </div>
       );
     });
-  };
-
-  formatDate = timestamp => {
-    return moment(new Date(timestamp)).format('MMM Do YY');
   };
 
   render() {
@@ -66,7 +62,7 @@ class Main extends Component {
         Header: 'Created',
         accessor: 'timestamp',
         Cell: props => (
-          <span className="number">{this.formatDate(props.value)}</span>
+          <span className="number">{formatDate(props.value)}</span>
         ),
       },
       {

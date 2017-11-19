@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addNewPost } from '../../dux/posts';
 import { getAllCategories } from '../../dux/categories';
-// import { getAllCategories } from '../../actions';
 
 import InputField from './components/inputField';
 
@@ -117,6 +116,7 @@ class CreatePost extends Component {
 
 function mapStateToProps({ categories }) {
   return {
+    currentCategory: categories.get('currentCategory'),
     allCategories: categories.get('allCategories'),
   };
 }
