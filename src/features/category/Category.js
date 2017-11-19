@@ -44,11 +44,6 @@ class Category extends Component {
       return <h1>No post for this category ...</h1>;
     }
 
-    const posts = postsOfCurrentCategory
-      .sortBy(item => item.get('voteScore'))
-      .reverse()
-      .toJS();
-
     const data = postsOfCurrentCategory.toJS();
     const columns = [
       {
@@ -81,16 +76,12 @@ class Category extends Component {
       },
     ];
 
-    console.log('====================================');
-    console.log(this.props);
-    console.log('====================================');
     return (
       <div>
         <h1>Category {this.props.match.params.category}</h1>
         <Link to={`/createPost/${this.props.match.params.category}`}>
           Add post
         </Link>
-        {this.renderPosts()}
         <ReactTable
           data={data}
           columns={columns}
