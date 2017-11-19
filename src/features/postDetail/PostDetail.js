@@ -14,7 +14,10 @@ class PostDetail extends Component {
     return (
       <div>
         <h1>Post Detail</h1>
-        <p>{post.get('title')}</p>
+        <p>{post.title}</p>
+        <p>{post.author}</p>
+        <p>{post.id}</p>
+        <p>{post.voteScore}</p>
       </div>
     );
   }

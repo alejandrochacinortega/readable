@@ -70,7 +70,12 @@ class Main extends Component {
         Header: '',
         accessor: '',
         Cell: props => (
-          <Link to={'/createPost/'}>
+          <Link
+            to={{
+              pathname: `/postDetail/${props.original.id}`,
+              state: { post: props.original },
+            }}
+          >
             <Button bsStyle="primary">GO</Button>
           </Link>
         ),
