@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { getAllCategories } from '../../actions';
+import { getAllCategories } from '../../dux/categories';
 import { getAllPosts } from '../../dux/posts';
 
 class Main extends Component {
@@ -42,10 +42,6 @@ class Main extends Component {
       .sortBy(item => item.get('voteScore'))
       .reverse()
       .toJS();
-
-    if (allCategories.size === 0) {
-      return <h1>Loading...</h1>;
-    }
 
     const data = this.props.allPosts.toJS();
 
@@ -84,6 +80,10 @@ class Main extends Component {
       },
     ];
 
+    if (allCategories.size === 0) {
+      return <h1>Loading...</h1>;
+    }
+
     return (
       <div>
         <Link to={'/createPost/'}>
@@ -94,7 +94,7 @@ class Main extends Component {
         <ReactTable
           data={data}
           columns={columns}
-          defaultPageSize={5}
+          defaultPageSize={20}
           minRows={2}
         />
       </div>
