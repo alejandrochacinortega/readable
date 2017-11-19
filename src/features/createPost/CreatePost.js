@@ -30,9 +30,7 @@ class CreatePost extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { currentCategory } = this.props;
 
-    currentCategory;
     const { title, body, author, voteScore } = this.state;
     const fields = {
       id: Date.now(),
@@ -119,7 +117,6 @@ class CreatePost extends Component {
 
 function mapStateToProps({ categories }) {
   return {
-    currentCategory: categories.get('currentCategory'),
     allCategories: categories.get('allCategories'),
   };
 }
