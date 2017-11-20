@@ -23,19 +23,8 @@ function* getPosts() {
 }
 
 function* addNewPost({ fields, callback }) {
-  console.log('====================================');
-  console.log('Fields saga ', fields);
-  console.log('====================================');
   const comingData = yield ApiClient.addNewPost(fields);
-  console.log('====================================');
-  console.log('Coming data ', comingData);
-  console.log('====================================');
   callback();
-  // try {
-  //   yield put({ type: GET_CATEGORIES_SUCCESS, categories });
-  // } catch (e) {
-  //   yield put({ type: GET_CATEGORIES_FAILED, message: e.message });
-  // }
 }
 
 /*

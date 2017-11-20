@@ -8,12 +8,14 @@ import { Button } from 'react-bootstrap';
 
 import ListItem from './components/listItem';
 import { formatDate } from '../../utils/numbers';
+import { getCommentsByPost } from '../../dux/comments';
 
 class Category extends Component {
   componentDidMount() {
     const { params } = this.props.match;
     setTimeout(() => {
       this.props.getCategory(params.category);
+      // this.props.getCommentsByPost(null);
     });
   }
 
@@ -83,7 +85,6 @@ class Category extends Component {
 
     return (
       <div>
-        <h1>Category {this.props.match.params.category}</h1>
         <Link to={`/createPost/${this.props.match.params.category}`}>
           Add post
         </Link>
@@ -107,4 +108,5 @@ function mapStateToProps({ categories, posts }) {
 
 export default connect(mapStateToProps, {
   getCategory,
+  getCommentsByPost,
 })(Category);

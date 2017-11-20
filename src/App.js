@@ -6,6 +6,7 @@ import Category from './features/category';
 import Main from './features/main';
 import CreatePost from './features/createPost';
 import PostDetail from './features/postDetail';
+import CreateComment from './features/createComment';
 
 class App extends React.Component {
   render() {
@@ -28,8 +29,14 @@ class App extends React.Component {
           render={props => <CreatePost {...props} />}
         />
         <Route
+          exact
           path={'/postDetail/:post'}
           render={props => <PostDetail {...props} />}
+        />
+        <Route
+          exact
+          path={'/createComment/'}
+          render={props => <CreateComment {...props} />}
         />
       </div>
     );

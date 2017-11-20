@@ -63,6 +63,7 @@ class CreatePost extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <h4>Create new post</h4>
           <label>
             Title
             <input

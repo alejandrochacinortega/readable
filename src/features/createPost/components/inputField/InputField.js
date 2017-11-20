@@ -18,7 +18,6 @@ class InputField extends Component {
           }}
           {...rest}
           onChange={text => {
-            console.log('changing value ', text.target.value);
             this.value = text.target.value;
             this.valid = validator(text.target.value);
             this.props.onChange(text.target.value);
