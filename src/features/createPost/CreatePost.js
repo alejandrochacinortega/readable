@@ -33,7 +33,7 @@ class CreatePost extends Component {
 
     const { title, body, author, voteScore } = this.state;
     const fields = {
-      id: Date.now(),
+      id: Date.now().toString(),
       timestamp: Date.now(),
       title,
       body,
