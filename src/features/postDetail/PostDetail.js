@@ -20,30 +20,30 @@ class PostDetail extends Component {
   }
 
   renderComments = () => {
-    console.log('====================================');
-    console.log(this.props.commentsOfCurrentPost);
-    console.log('====================================');
     if (this.props.commentsOfCurrentPost.size === 0) {
       return <p>No comments</p>;
     }
 
-    return this.props.commentsOfCurrentPost.map(comment => {
-      return (
-        <div
-          style={{
-            marginTop: 15,
-            borderBottomStyle: 'solid',
-            borderColor: 'gray',
-          }}
-          key={comment.get('id)')}
-        >
-          <h5>
-            {comment.get('author')} - {comment.get('voteScore')}
-          </h5>
-          <h6>{comment.get('body')}</h6>
-        </div>
-      );
-    });
+    return this.props.commentsOfCurrentPost
+      .sortBy(item => item.get('voteScore'))
+      .reverse()
+      .map(comment => {
+        return (
+          <div
+            style={{
+              marginTop: 15,
+              borderBottomStyle: 'solid',
+              borderColor: 'gray',
+            }}
+            key={comment.get('id)')}
+          >
+            <h5>
+              {comment.get('author')} - {comment.get('voteScore')}
+            </h5>
+            <h6>{comment.get('body')}</h6>
+          </div>
+        );
+      });
   };
 
   render() {

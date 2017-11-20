@@ -27,9 +27,6 @@ const initialState = Map({
 });
 
 export default function(state = initialState, action) {
-  console.log('====================================');
-  console.log('action ', action);
-  console.log('====================================');
   switch (action.type) {
     case GET_COMMENTS_BY_POST_SUCCESS:
       return state.setIn(['commentsOfCurrentPost'], fromJS(action.comments));
