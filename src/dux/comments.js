@@ -12,6 +12,7 @@ export const DELETE_COMMENT_FAILED = 'DELETE_COMMENT_FAILED';
 export const GET_COMMENTS_BY_POST = 'GET_COMMENTS_BY_POST';
 export const GET_COMMENTS_BY_POST_SUCCESS = 'GET_COMMENTS_BY_POST_SUCCESS';
 export const GET_COMMENTS_BY_POST_FAILED = 'GET_COMMENTS_BY_POST_FAILED';
+export const COMMENT_VOTE = 'COMMENT_VOTE';
 
 export function addNewComment(fields, callback) {
   console.log(' dsdds ', fields);
@@ -42,6 +43,14 @@ export function getCommentsByPost(postId) {
   return {
     type: GET_COMMENTS_BY_POST,
     postId,
+  };
+}
+
+export function commentVote(comment, option) {
+  return {
+    type: COMMENT_VOTE,
+    comment,
+    option,
   };
 }
 

@@ -9,6 +9,7 @@ import {
   getCommentsByPost,
   editComment,
   deleteComment,
+  commentVote,
 } from '../../dux/comments';
 import { setCurrentPost, deletePost } from '../../dux/posts';
 
@@ -58,6 +59,18 @@ class PostDetail extends Component {
               <Button bsStyle="primary">Edit comment</Button>
             </Link>
             <Button
+              bsStyle="warning"
+              onClick={() => this.props.commentVote(comment, 'upVote')}
+            >
+              UP
+            </Button>
+            <Button
+              bsStyle="warning"
+              onClick={() => this.props.commentVote(comment, 'downVote')}
+            >
+              DOWN
+            </Button>
+            <Button
               bsStyle="danger"
               onClick={() => this.deleteComment(comment)}
             >
@@ -70,13 +83,14 @@ class PostDetail extends Component {
 
   deleteComment = comment => {
     this.props.deleteComment(comment, () => {
-      this.props.history.push('/');
+      alert(`Comment create by ${comment.get('author')} deleted.`);
     });
   };
 
   deletePost = () => {
     const { post } = this.props.location.state;
     this.props.deletePost(post.id, () => {
+      alert(`Post ${post.title} deleted.`);
       this.props.history.push('/');
     });
   };
@@ -151,4 +165,5 @@ export default connect(mapStateToProps, {
   setCurrentPost,
   deletePost,
   deleteComment,
+  commentVote,
 })(PostDetail);

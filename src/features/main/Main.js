@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import { getAllCategories, getCategory } from '../../dux/categories';
-import { getAllPosts } from '../../dux/posts';
+import { getAllPosts, postVote } from '../../dux/posts';
 import { formatDate } from '../../utils/numbers';
 
 class Main extends Component {
@@ -64,6 +64,34 @@ class Main extends Component {
         accessor: 'voteScore',
       },
       {
+        Header: 'UP',
+        accessor: 'id',
+        Cell: props => (
+          <span className="number">
+            <Button
+              bsStyle="primary"
+              onClick={() => this.props.postVote(props.value, 'upVote')}
+            >
+              UP
+            </Button>
+          </span>
+        ),
+      },
+      {
+        Header: 'DOWN',
+        accessor: 'id',
+        Cell: props => (
+          <span className="number">
+            <Button
+              bsStyle="primary"
+              onClick={() => this.props.postVote(props.value, 'downVote')}
+            >
+              DOWN
+            </Button>
+          </span>
+        ),
+      },
+      {
         Header: 'Created',
         accessor: 'timestamp',
         Cell: props => (
@@ -119,4 +147,5 @@ export default connect(mapStateToProps, {
   getAllCategories,
   getAllPosts,
   getCategory,
+  postVote,
 })(Main);

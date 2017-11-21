@@ -18,6 +18,9 @@ export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
 export const GET_POSTS_FAILED = 'GET_POSTS_FAILED';
 export const SET_CURRENT_POST = 'SET_CURRENT_POST';
+export const POST_VOTE = 'POST_VOTE';
+export const POST_VOTE_SUCCESS = 'POST_VOTE_SUCCESS';
+export const POST_VOTE_FAILED = 'POST_VOTE_FAILED';
 
 export function addNewPost(fields, callback) {
   return {
@@ -49,10 +52,25 @@ export function getAllPosts() {
   };
 }
 
+export function getAllPostsOfCurrentCategory() {
+  return {
+    type: GET_POSTS_OF_CURRENT_CATEGORY,
+  };
+}
+
 export function setCurrentPost(post) {
   return {
     type: SET_CURRENT_POST,
     post,
+  };
+}
+
+export function postVote(postId, option, callback) {
+  return {
+    type: POST_VOTE,
+    postId,
+    option,
+    callback,
   };
 }
 

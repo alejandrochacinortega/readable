@@ -1,5 +1,5 @@
 import { takeEvery } from 'redux-saga/effects';
-import { fork, put } from 'redux-saga/effects';
+import { fork, put, call } from 'redux-saga/effects';
 
 import * as ApiClient from '../ApiClient';
 
@@ -16,6 +16,9 @@ import {
   DELETE_POST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILED,
+  POST_VOTE,
+  POST_VOTE_FAILED,
+  POST_VOTE_SUCCESS,
 } from '../dux/posts.js';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
@@ -57,6 +60,17 @@ function* deletePost({ postId, callback }) {
   callback();
 }
 
+function* postVote({ postId, option }) {
+  const res = yield call(ApiClient.postVote, { postId, option });
+  const posts = yield call(ApiClient.getPosts);
+
+  try {
+    yield put({ type: GET_POSTS_SUCCESS, posts });
+  } catch (e) {
+    yield put({ type: GET_POSTS_FAILED, message: e.message });
+  }
+}
+
 /*
  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
  Allows concurrent fetches of user.
@@ -78,6 +92,10 @@ function* watchDeletePost() {
   yield takeEvery(DELETE_POST, deletePost);
 }
 
+function* watchPostVote() {
+  yield takeEvery(POST_VOTE, postVote);
+}
+
 /*
  Alternatively you may use takeLatest.
  
@@ -90,6 +108,7 @@ function* postsSaga() {
   yield fork(watchAddNewPost);
   yield fork(watchEditPost);
   yield fork(watchDeletePost);
+  yield fork(watchPostVote);
 }
 
 export default postsSaga;

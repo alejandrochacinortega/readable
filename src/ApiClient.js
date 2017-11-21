@@ -58,6 +58,20 @@ export const deletePost = postId => {
     .catch(error => console.log('Err ', error));
 };
 
+export const postVote = ({ postId, option }) => {
+  return axios({
+    method: 'POST',
+    url: `${ROOT_URL}/posts/${postId}`,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      option: option,
+    },
+  });
+};
+
 export const getCommentsByPost = id => {
   return fetch(`${ROOT_URL}/posts/${id}/comments`, {
     method: 'GET',
@@ -107,4 +121,18 @@ export const deleteComment = commentId => {
   })
     .then(data => console.log('Dadddd ', data))
     .catch(error => console.log('Err ', error));
+};
+
+export const commentVote = ({ commentId, option }) => {
+  return axios({
+    method: 'POST',
+    url: `${ROOT_URL}/comments/${commentId}`,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    data: {
+      option: option,
+    },
+  });
 };

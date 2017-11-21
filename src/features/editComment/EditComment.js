@@ -32,7 +32,7 @@ class EditComment extends Component {
       author,
     };
     this.props.editComment(fields, () => {
-      this.props.history.push('/');
+      this.props.history.goBack();
     });
   };
 
@@ -60,7 +60,7 @@ class EditComment extends Component {
               onChange={this.handleBodyChange}
             />
           </label>
-          <button>Edit Post</button>
+          <button>Edit Comment</button>
         </form>
       </div>
     );

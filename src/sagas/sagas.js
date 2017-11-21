@@ -14,6 +14,9 @@ import {
   GET_POSTS_OF_CURRENT_CATEGORY,
   GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
   GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
+  POST_VOTE,
+  POST_VOTE_FAILED,
+  POST_VOTE_SUCCESS,
 } from '../dux/posts';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
@@ -43,6 +46,24 @@ function* getCategory({ category }) {
   }
 }
 
+function* postVote({ postId, option }) {
+  // const res = yield call(ApiClient.postVote, { postId, option });
+  // const posts = yield call(ApiClient.getPosts);
+  // const postsOfCurrentCategory = yield ApiClient.getPostsByCategory(category);
+  // try {
+  //   yield put({ type: GET_CATEGORY_SUCCESS, category });
+  //   yield put({
+  //     type: GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
+  //     postsOfCurrentCategory,
+  //   });
+  // } catch (e) {
+  //   yield put({
+  //     type: GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
+  //     message: e.message,
+  //   });
+  // }
+}
+
 /*
  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
  Allows concurrent fetches of user.
@@ -56,6 +77,10 @@ function* watchGetCategory() {
   yield takeEvery(GET_CATEGORY, getCategory);
 }
 
+function* watchPostVote() {
+  yield takeEvery(POST_VOTE, postVote);
+}
+
 /*
  Alternatively you may use takeLatest.
  
@@ -66,6 +91,7 @@ function* watchGetCategory() {
 function* mySaga() {
   yield fork(watchGetCategories);
   yield fork(watchGetCategory);
+  yield fork(watchPostVote);
 }
 
 export default mySaga;

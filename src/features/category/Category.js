@@ -9,13 +9,13 @@ import { Button } from 'react-bootstrap';
 import ListItem from './components/listItem';
 import { formatDate } from '../../utils/numbers';
 import { getCommentsByPost } from '../../dux/comments';
+import { postVote, getAllPostsOfCurrentCategory } from '../../dux/posts';
 
 class Category extends Component {
   componentDidMount() {
     const { params } = this.props.match;
     setTimeout(() => {
       this.props.getCategory(params.category);
-      // this.props.getCommentsByPost(null);
     });
   }
 
@@ -63,6 +63,34 @@ class Category extends Component {
       {
         Header: 'Vote',
         accessor: 'voteScore',
+      },
+      {
+        Header: 'UP',
+        accessor: 'id',
+        Cell: props => (
+          <span className="number">
+            <Button
+              bsStyle="primary"
+              onClick={() => this.props.postVote(props.value, 'upVote')}
+            >
+              UP
+            </Button>
+          </span>
+        ),
+      },
+      {
+        Header: 'DOWN',
+        accessor: 'id',
+        Cell: props => (
+          <span className="number">
+            <Button
+              bsStyle="primary"
+              onClick={() => this.props.postVote(props.value, 'downVote')}
+            >
+              DOWN
+            </Button>
+          </span>
+        ),
       },
       {
         Header: 'Created',
@@ -113,4 +141,6 @@ function mapStateToProps({ categories, posts }) {
 export default connect(mapStateToProps, {
   getCategory,
   getCommentsByPost,
+  postVote,
+  getAllPostsOfCurrentCategory,
 })(Category);
