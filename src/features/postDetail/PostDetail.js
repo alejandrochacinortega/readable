@@ -5,7 +5,12 @@ import { formatDate } from '../../utils/numbers';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { getCommentsByPost } from '../../dux/comments';
+import {
+  getCommentsByPost,
+  editComment,
+  deleteComment,
+} from '../../dux/comments';
+import { setCurrentPost, deletePost } from '../../dux/posts';
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -13,9 +18,11 @@ class PostDetail extends Component {
       return false;
     }
 
-    const { post } = this.props.match.params;
+    const { postId } = this.props.match.params;
+    const { post } = this.props.location.state;
     setTimeout(() => {
-      this.props.getCommentsByPost(post);
+      this.props.getCommentsByPost(post.id);
+      this.props.setCurrentPost(post);
     });
   }
 
@@ -31,7 +38,8 @@ class PostDetail extends Component {
         return (
           <div
             style={{
-              marginTop: 15,
+              paddingBottom: 15,
+              paddingBottom: 15,
               borderBottomStyle: 'solid',
               borderColor: 'gray',
             }}
@@ -41,9 +49,71 @@ class PostDetail extends Component {
               {comment.get('author')} - {comment.get('voteScore')}
             </h5>
             <h6>{comment.get('body')}</h6>
+            <Link
+              to={{
+                pathname: `/editComment/`,
+                params: { comment: comment },
+              }}
+            >
+              <Button bsStyle="primary">Edit comment</Button>
+            </Link>
+            <Button
+              bsStyle="danger"
+              onClick={() => this.deleteComment(comment)}
+            >
+              Delete Comment
+            </Button>
           </div>
         );
       });
+  };
+
+  deleteComment = comment => {
+    this.props.deleteComment(comment, () => {
+      this.props.history.push('/');
+    });
+  };
+
+  deletePost = () => {
+    const { post } = this.props.location.state;
+    this.props.deletePost(post.id, () => {
+      this.props.history.push('/');
+    });
+  };
+
+  renderCreateComment = () => {
+    const { post } = this.props.location.state;
+    return (
+      <Link
+        to={{
+          pathname: `/createComment/`,
+          params: { post: post },
+        }}
+      >
+        <Button bsStyle="primary">Create comment</Button>
+      </Link>
+    );
+  };
+
+  renderEditPost = () => {
+    const { post } = this.props.location.state;
+    return (
+      <Link
+        to={{
+          pathname: `/editPost/`,
+        }}
+      >
+        <Button bsStyle="primary">Edit Post</Button>
+      </Link>
+    );
+  };
+
+  renderDeletePost = () => {
+    return (
+      <Button bsStyle="danger" onClick={this.deletePost}>
+        Delete post
+      </Button>
+    );
   };
 
   render() {
@@ -54,16 +124,12 @@ class PostDetail extends Component {
 
     return (
       <div>
-        <Link
-          to={{
-            pathname: `/createComment/`,
-            state: { post: post },
-          }}
-        >
-          <Button bsStyle="primary">Create comment</Button>
-        </Link>
+        {this.renderCreateComment()}
+        {this.renderEditPost()}
+        {this.renderDeletePost()}
         <h1>Post Detail</h1>
         <p>{post.title}</p>
+        <p>{post.body}</p>
         <p>{post.author}</p>
         <p>{formatDate(post.timestamp)}</p>
         <p>{post.voteScore}</p>
@@ -80,4 +146,9 @@ function mapStateToProps({ comments }) {
   };
 }
 
-export default connect(mapStateToProps, { getCommentsByPost })(PostDetail);
+export default connect(mapStateToProps, {
+  getCommentsByPost,
+  setCurrentPost,
+  deletePost,
+  deleteComment,
+})(PostDetail);

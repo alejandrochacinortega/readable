@@ -31,19 +31,32 @@ export const addNewPost = post => {
     .catch(error => console.log('Err ', error));
 };
 
-// export const addNewComment = comment => {
-//   console.log('====================================');
-//   console.log('commment api ', comment);
-//   console.log('====================================');
-//   return fetch(`${ROOT_URL}/comments`, {
-//     method: 'POST',
-//     headers: {
-//       ...headers,
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ comment }),
-//   }).then(res => res.json());
-// };
+export const editPost = post => {
+  axios({
+    method: 'PUT',
+    url: `${ROOT_URL}/posts/${post.id}`,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    data: post,
+  })
+    .then(data => console.log('Dadddd ', data))
+    .catch(error => console.log('Err ', error));
+};
+
+export const deletePost = postId => {
+  axios({
+    method: 'DELETE',
+    url: `${ROOT_URL}/posts/${postId}`,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(data => console.log('Dadddd ', data))
+    .catch(error => console.log('Err ', error));
+};
 
 export const getCommentsByPost = id => {
   return fetch(`${ROOT_URL}/posts/${id}/comments`, {
@@ -64,6 +77,33 @@ export const addNewComment = comment => {
       'Content-Type': 'application/json',
     },
     data: comment,
+  })
+    .then(data => console.log('Dadddd ', data))
+    .catch(error => console.log('Err ', error));
+};
+
+export const editComment = comment => {
+  axios({
+    method: 'PUT',
+    url: `${ROOT_URL}/comments/${comment.id}`,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    data: comment,
+  })
+    .then(data => console.log('Dadddd ', data))
+    .catch(error => console.log('Err ', error));
+};
+
+export const deleteComment = commentId => {
+  axios({
+    method: 'DELETE',
+    url: `${ROOT_URL}/comments/${commentId}`,
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
   })
     .then(data => console.log('Dadddd ', data))
     .catch(error => console.log('Err ', error));

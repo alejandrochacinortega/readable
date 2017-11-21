@@ -48,6 +48,10 @@ class Main extends Component {
         accessor: 'title',
       },
       {
+        Header: 'Body',
+        accessor: 'body',
+      },
+      {
         Header: 'Author',
         accessor: 'author',
       },

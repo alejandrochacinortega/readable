@@ -10,24 +10,39 @@ import {
   GET_COMMENTS_BY_POST,
   GET_COMMENTS_BY_POST_FAILED,
   GET_COMMENTS_BY_POST_SUCCESS,
+  EDIT_COMMENT,
+  EDIT_COMMENT_SUCCESS,
+  EDIT_COMMENT_FAILED,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAILED,
 } from '../dux/comments.js';
 
 function* addNewComment({ fields, callback }) {
-  const comingData = yield ApiClient.addNewComment(fields);
-  console.log('====================================');
-  console.log(comingData);
-  console.log(fields);
-  console.log('====================================');
-  // try {
-  //   yield put({ type: ADD_NEW_COMMENT_SUCCESS, comingData });
-  // } catch (e) {
-  //   yield put({ type: ADD_NEW_COMMENT_FAILED, message: e.message });
-  // }
-
+  yield ApiClient.addNewComment(fields);
   const comments = yield ApiClient.getCommentsByPost(fields.parentId);
-  console.log('====================================');
-  console.log('comment sanga ', comments);
-  console.log('====================================');
+  try {
+    yield put({ type: GET_COMMENTS_BY_POST_SUCCESS, comments });
+  } catch (e) {
+    yield put({ type: GET_COMMENTS_BY_POST_FAILED, message: e.message });
+  }
+  callback();
+}
+
+function* editComment({ fields, callback }) {
+  const edit = yield ApiClient.editComment(fields);
+  const comments = yield ApiClient.getCommentsByPost(fields.parentId);
+  try {
+    yield put({ type: GET_COMMENTS_BY_POST_SUCCESS, comments });
+  } catch (e) {
+    yield put({ type: GET_COMMENTS_BY_POST_FAILED, message: e.message });
+  }
+  callback();
+}
+
+function* deleteComment({ comment, callback }) {
+  yield ApiClient.deleteComment(comment.get('id'));
+  const comments = yield ApiClient.getCommentsByPost(comment.get('parentId'));
   try {
     yield put({ type: GET_COMMENTS_BY_POST_SUCCESS, comments });
   } catch (e) {
@@ -53,9 +68,19 @@ function* watchGetCommentsByPost() {
   yield takeEvery(GET_COMMENTS_BY_POST, getCommentsByPost);
 }
 
+function* watchEditComment() {
+  yield takeEvery(EDIT_COMMENT, editComment);
+}
+
+function* watchDeleteComment() {
+  yield takeEvery(DELETE_COMMENT, deleteComment);
+}
+
 function* postsSaga() {
   yield fork(watchAddNewComment);
   yield fork(watchGetCommentsByPost);
+  yield fork(watchEditComment);
+  yield fork(watchDeleteComment);
 }
 
 export default postsSaga;

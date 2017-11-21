@@ -22,7 +22,7 @@ class CreateComment extends Component {
     event.preventDefault();
 
     const { title, body, author, voteScore } = this.state;
-    const { post } = this.props.location.state;
+    const { post } = this.props.location.params;
     const fields = {
       id: Date.now(),
       parentId: post.id,
@@ -36,7 +36,7 @@ class CreateComment extends Component {
 
     this.props.addNewComment(fields, () => {
       this.props.history.push({
-        pathname: `/postDetail/${this.props.location.state.post.id}`,
+        pathname: `/postDetail/${post.id}`,
         state: { post: post },
       });
     });
@@ -70,7 +70,6 @@ class CreateComment extends Component {
               onChange={this.handleAuthorChange}
             />
           </label>
-          )}
           <button>Create comment</button>
         </form>
       </div>

@@ -10,6 +10,12 @@ import {
   ADD_NEW_POST,
   ADD_NEW_POST_SUCCESS,
   ADD_NEW_POST_FAILED,
+  EDIT_POST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_FAILED,
+  DELETE_POST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILED,
 } from '../dux/posts.js';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
@@ -27,6 +33,30 @@ function* addNewPost({ fields, callback }) {
   callback();
 }
 
+function* editPost({ fields, callback }) {
+  yield ApiClient.editPost(fields);
+  const posts = yield ApiClient.getPosts();
+
+  try {
+    yield put({ type: GET_POSTS_SUCCESS, posts });
+  } catch (e) {
+    yield put({ type: GET_POSTS_FAILED, message: e.message });
+  }
+  callback();
+}
+
+function* deletePost({ postId, callback }) {
+  yield ApiClient.deletePost(postId);
+  const posts = yield ApiClient.getPosts();
+
+  try {
+    yield put({ type: GET_POSTS_SUCCESS, posts });
+  } catch (e) {
+    yield put({ type: GET_POSTS_FAILED, message: e.message });
+  }
+  callback();
+}
+
 /*
  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
  Allows concurrent fetches of user.
@@ -40,6 +70,14 @@ function* watchAddNewPost() {
   yield takeEvery(ADD_NEW_POST, addNewPost);
 }
 
+function* watchEditPost() {
+  yield takeEvery(EDIT_POST, editPost);
+}
+
+function* watchDeletePost() {
+  yield takeEvery(DELETE_POST, deletePost);
+}
+
 /*
  Alternatively you may use takeLatest.
  
@@ -50,6 +88,8 @@ function* watchAddNewPost() {
 function* postsSaga() {
   yield fork(watchGetPosts);
   yield fork(watchAddNewPost);
+  yield fork(watchEditPost);
+  yield fork(watchDeletePost);
 }
 
 export default postsSaga;

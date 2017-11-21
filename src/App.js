@@ -7,6 +7,8 @@ import Main from './features/main';
 import CreatePost from './features/createPost';
 import PostDetail from './features/postDetail';
 import CreateComment from './features/createComment';
+import EditPost from './features/editPost';
+import EditComment from './features/editComment';
 
 class App extends React.Component {
   render() {
@@ -37,6 +39,16 @@ class App extends React.Component {
           exact
           path={'/createComment/'}
           render={props => <CreateComment {...props} />}
+        />
+        <Route
+          exact
+          path={'/editPost/'}
+          render={props => <EditPost {...props} />}
+        />
+        <Route
+          exact
+          path={'/editComment/'}
+          render={props => <EditComment {...props} />}
         />
       </div>
     );
