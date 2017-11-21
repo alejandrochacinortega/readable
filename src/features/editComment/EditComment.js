@@ -8,12 +8,10 @@ class EditComment extends Component {
     super(props);
     const params = this.props.location.params;
     this.state = {
-      title: params && params.comment ? params.comment.get('title') : null,
+      author: params && params.comment ? params.comment.get('author') : null,
       body: params && params.comment ? params.comment.get('body') : null,
     };
   }
-
-  handleTitleChange = event => this.setState({ title: event.target.value });
 
   handleBodyChange = event => this.setState({ body: event.target.value });
 
@@ -30,7 +28,6 @@ class EditComment extends Component {
       parentDeleted: false,
       timestamp: Date.now(),
       voteScore: comment.voteScore,
-      title,
       body,
       author,
     };
@@ -48,12 +45,11 @@ class EditComment extends Component {
         <form onSubmit={this.handleSubmit}>
           <h4>Edit comment</h4>
           <label>
-            Title
-            <input
-              type="text"
-              placeholder="Enter title"
-              value={this.state.title}
-              onChange={this.handleTitleChange}
+            Author
+            <textarea
+              placeholder="Type the body..."
+              value={this.state.author}
+              onChange={this.handleAuthorChange}
             />
           </label>
           <label>
@@ -64,15 +60,6 @@ class EditComment extends Component {
               onChange={this.handleBodyChange}
             />
           </label>
-          <label>
-            Author
-            <textarea
-              placeholder="Type the body..."
-              value={this.state.author}
-              onChange={this.handleAuthorChange}
-            />
-          </label>
-
           <button>Edit Post</button>
         </form>
       </div>
