@@ -71,7 +71,7 @@ class Category extends Component {
           <span className="number">
             <Button
               bsStyle="primary"
-              onClick={() => this.props.postVote(props.value, 'upVote')}
+              onClick={() => this.props.postVote(props.original, 'upVote')}
             >
               UP
             </Button>
@@ -85,7 +85,7 @@ class Category extends Component {
           <span className="number">
             <Button
               bsStyle="primary"
-              onClick={() => this.props.postVote(props.value, 'downVote')}
+              onClick={() => this.props.postVote(props.original, 'downVote')}
             >
               DOWN
             </Button>

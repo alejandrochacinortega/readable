@@ -1,5 +1,5 @@
 import { takeEvery } from 'redux-saga/effects';
-import { fork, put } from 'redux-saga/effects';
+import { fork, put, call } from 'redux-saga/effects';
 
 import * as ApiClient from '../ApiClient';
 import {
@@ -46,22 +46,22 @@ function* getCategory({ category }) {
   }
 }
 
-function* postVote({ postId, option }) {
-  // const res = yield call(ApiClient.postVote, { postId, option });
-  // const posts = yield call(ApiClient.getPosts);
-  // const postsOfCurrentCategory = yield ApiClient.getPostsByCategory(category);
-  // try {
-  //   yield put({ type: GET_CATEGORY_SUCCESS, category });
-  //   yield put({
-  //     type: GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
-  //     postsOfCurrentCategory,
-  //   });
-  // } catch (e) {
-  //   yield put({
-  //     type: GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
-  //     message: e.message,
-  //   });
-  // }
+function* postVote({ post, option }) {
+  const posts = yield call(ApiClient.getPosts);
+  const postsOfCurrentCategory = yield ApiClient.getPostsByCategory(
+    post.category,
+  );
+  try {
+    yield put({
+      type: GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
+      postsOfCurrentCategory,
+    });
+  } catch (e) {
+    yield put({
+      type: GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
+      message: e.message,
+    });
+  }
 }
 
 /*

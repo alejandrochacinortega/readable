@@ -65,10 +65,10 @@ export function setCurrentPost(post) {
   };
 }
 
-export function postVote(postId, option, callback) {
+export function postVote(post, option, callback) {
   return {
     type: POST_VOTE,
-    postId,
+    post,
     option,
     callback,
   };

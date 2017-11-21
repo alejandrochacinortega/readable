@@ -60,8 +60,8 @@ function* deletePost({ postId, callback }) {
   callback();
 }
 
-function* postVote({ postId, option }) {
-  const res = yield call(ApiClient.postVote, { postId, option });
+function* postVote({ post, option }) {
+  const res = yield call(ApiClient.postVote, { postId: post.id, option });
   const posts = yield call(ApiClient.getPosts);
 
   try {
