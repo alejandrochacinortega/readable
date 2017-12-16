@@ -8,6 +8,7 @@ import { Button } from 'react-bootstrap';
 import { getAllCategories, getCategory } from '../../dux/categories';
 import { getAllPosts, postVote } from '../../dux/posts';
 import { formatDate } from '../../utils/numbers';
+import NavigationMenu from '../../components/navigationMenu';
 
 class Main extends Component {
   componentDidMount() {
@@ -19,26 +20,8 @@ class Main extends Component {
     });
   }
 
-  renderCategories = () => {
-    return this.props.allCategories.map((category, index) => {
-      return (
-        <div key={index}>
-          <Link to={`category/${category.get('path')}`}>
-            {category.get('name')}
-          </Link>
-          <br />
-        </div>
-      );
-    });
-  };
-
   render() {
-    const { allCategories, allPosts } = this.props;
-
-    const posts = this.props.allPosts
-      .sortBy(item => item.get('voteScore'))
-      .reverse()
-      .toJS();
+    const { allCategories } = this.props;
 
     const data = this.props.allPosts.toJS();
 
@@ -129,11 +112,7 @@ class Main extends Component {
 
     return (
       <div>
-        <Link to={'/createPost/'}>
-          <Button bsStyle="primary">Create new post</Button>
-        </Link>
-        <h3>Categories</h3>
-        {this.renderCategories()}
+        <NavigationMenu />
         <ReactTable
           data={data}
           columns={columns}

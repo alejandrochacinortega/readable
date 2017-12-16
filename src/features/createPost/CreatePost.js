@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addNewPost } from '../../dux/posts';
 import { getAllCategories } from '../../dux/categories';
-
-import InputField from './components/inputField';
 
 class CreatePost extends Component {
   constructor(props) {

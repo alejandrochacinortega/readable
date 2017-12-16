@@ -10,6 +10,7 @@ import ListItem from './components/listItem';
 import { formatDate } from '../../utils/numbers';
 import { getCommentsByPost } from '../../dux/comments';
 import { postVote, getAllPostsOfCurrentCategory } from '../../dux/posts';
+import NavigationMenu from '../../components/navigationMenu';
 
 class Category extends Component {
   componentDidMount() {
@@ -43,10 +44,17 @@ class Category extends Component {
     const { postsOfCurrentCategory } = this.props;
 
     if (postsOfCurrentCategory.size === 0) {
-      return <h1>No post for this category ...</h1>;
+      return (
+        <div>
+          <NavigationMenu category={this.props.match.params.category} />
+          <h1>No post for this category ...</h1>
+        </div>
+      );
     }
 
     const data = postsOfCurrentCategory.toJS();
+    console.log('currentCategory ', this.props.currentCategory);
+    console.log('DATA ', data);
     const columns = [
       {
         Header: 'Title',
@@ -117,9 +125,7 @@ class Category extends Component {
 
     return (
       <div>
-        <Link to={`/createPost/${this.props.match.params.category}`}>
-          Add post
-        </Link>
+        <NavigationMenu category={this.props.match.params.category} />
         <ReactTable
           data={data}
           columns={columns}

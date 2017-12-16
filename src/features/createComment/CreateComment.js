@@ -42,13 +42,6 @@ class CreateComment extends Component {
     });
   };
 
-  // componentDidMount() {
-  //   const { getAllCategories } = this.props;
-  //   setTimeout(() => {
-  //     getAllCategories();
-  //   });
-  // }
-
   render() {
     return (
       <div>

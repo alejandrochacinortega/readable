@@ -8,15 +8,13 @@ import {
   GET_CATEGORIES_FAILED,
   GET_CATEGORY,
   GET_CATEGORY_SUCCESS,
+  SET_CURRENT_CATEGORY,
 } from '../dux/categories.js';
 
 import {
-  GET_POSTS_OF_CURRENT_CATEGORY,
   GET_POSTS_OF_CURRENT_CATEGORY_FAILED,
   GET_POSTS_OF_CURRENT_CATEGORY_SUCCESS,
   POST_VOTE,
-  POST_VOTE_FAILED,
-  POST_VOTE_SUCCESS,
 } from '../dux/posts';
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
@@ -74,6 +72,7 @@ function* watchGetCategories() {
 }
 
 function* watchGetCategory() {
+  yield takeEvery(SET_CURRENT_CATEGORY, getCategory);
   yield takeEvery(GET_CATEGORY, getCategory);
 }
 

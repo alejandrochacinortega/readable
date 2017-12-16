@@ -8,7 +8,6 @@ import DisplayError from '../../components/displayError';
 
 import {
   getCommentsByPost,
-  editComment,
   deleteComment,
   commentVote,
 } from '../../dux/comments';
@@ -20,7 +19,6 @@ class PostDetail extends Component {
       return false;
     }
 
-    const { postId } = this.props.match.params;
     const { post } = this.props.location.state;
     setTimeout(() => {
       this.props.getCommentsByPost(post.id);
@@ -41,7 +39,7 @@ class PostDetail extends Component {
           <div
             style={{
               paddingBottom: 15,
-              paddingBottom: 15,
+
               borderBottomStyle: 'solid',
               borderColor: 'gray',
             }}
@@ -111,7 +109,6 @@ class PostDetail extends Component {
   };
 
   renderEditPost = () => {
-    const { post } = this.props.location.state;
     return (
       <Link
         to={{
