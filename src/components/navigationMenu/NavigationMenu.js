@@ -47,7 +47,9 @@ class NavigationMenu extends Component {
     return (
       <div>
         <p>Menu</p>
-        <Link to={`/createPost/${this.props.category}`}>
+        <Link
+          to={`/createPost/${this.props.category ? this.props.category : ''}`}
+        >
           <Button bsStyle="primary">Create new post</Button>
         </Link>
         <h3>Categories</h3>
