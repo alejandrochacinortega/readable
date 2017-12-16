@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { formatDate } from '../../utils/numbers';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import DisplayError from '../../components/displayError';
 
 import {
   getCommentsByPost,
@@ -15,7 +16,7 @@ import { setCurrentPost, deletePost } from '../../dux/posts';
 
 class PostDetail extends Component {
   componentDidMount() {
-    if (!this.props.location) {
+    if (!this.props.location || !this.props.location.state) {
       return false;
     }
 
@@ -131,9 +132,17 @@ class PostDetail extends Component {
   };
 
   render() {
+    console.log('====================================');
+    console.log(this.props.location);
+    console.log('====================================');
     if (!this.props.location) {
       return false;
     }
+
+    if (!this.props.location.state) {
+      return <DisplayError text="Post has been deleted" />;
+    }
+
     const { post } = this.props.location.state;
 
     return (

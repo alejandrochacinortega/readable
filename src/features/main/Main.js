@@ -48,17 +48,10 @@ class Main extends Component {
         accessor: 'title',
       },
       {
-        Header: 'Body',
-        accessor: 'body',
-      },
-      {
         Header: 'Author',
         accessor: 'author',
       },
-      {
-        Header: 'Category',
-        accessor: 'category',
-      },
+
       {
         Header: 'Vote',
         accessor: 'voteScore',
@@ -90,6 +83,22 @@ class Main extends Component {
             </Button>
           </span>
         ),
+      },
+      {
+        Header: 'UP',
+        accessor: 'id',
+        Cell: props => {
+          <span className="number">
+            <Link
+              to={{
+                pathname: `/editPost/`,
+              }}
+            >
+              <Button bsStyle="primary">Edit Post</Button>
+            </Link>
+            );
+          </span>;
+        },
       },
       {
         Header: 'Created',
