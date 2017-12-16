@@ -9,7 +9,12 @@ import { Button } from 'react-bootstrap';
 import ListItem from './components/listItem';
 import { formatDate } from '../../utils/numbers';
 import { getCommentsByPost } from '../../dux/comments';
-import { postVote, getAllPostsOfCurrentCategory } from '../../dux/posts';
+import {
+  postVote,
+  getAllPostsOfCurrentCategory,
+  deletePost,
+  setCurrentPost,
+} from '../../dux/posts';
 import NavigationMenu from '../../components/navigationMenu';
 
 class Category extends Component {
@@ -19,6 +24,16 @@ class Category extends Component {
       this.props.getCategory(params.category);
     });
   }
+
+  deletePost = post => {
+    this.props.deletePost(post.id, () => {
+      alert(`Post ${post.title} deleted.`);
+    });
+  };
+
+  editPost = post => {
+    this.props.setCurrentPost(post);
+  };
 
   renderPosts = () => {
     const { postsOfCurrentCategory } = this.props;
@@ -121,6 +136,36 @@ class Category extends Component {
           </Link>
         ),
       },
+      {
+        Header: '',
+        accessor: '',
+        Cell: props => (
+          <Link
+            to={{
+              pathname: `/editPost/`,
+            }}
+          >
+            <Button
+              bsStyle="primary"
+              onClick={() => this.editPost(props.original)}
+            >
+              Edit Post
+            </Button>
+          </Link>
+        ),
+      },
+      {
+        Header: '',
+        accessor: '',
+        Cell: props => (
+          <Button
+            bsStyle="danger"
+            onClick={() => this.deletePost(props.original)}
+          >
+            Delete post
+          </Button>
+        ),
+      },
     ];
 
     return (
@@ -149,4 +194,6 @@ export default connect(mapStateToProps, {
   getCommentsByPost,
   postVote,
   getAllPostsOfCurrentCategory,
+  deletePost,
+  setCurrentPost,
 })(Category);

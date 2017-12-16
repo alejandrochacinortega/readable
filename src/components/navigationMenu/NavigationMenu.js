@@ -17,7 +17,7 @@ class NavigationMenu extends Component {
                 onClick={() =>
                   this.props.setCurrentCategory(category.get('name'))}
               >
-                hey {category.get('name')}
+                {category.get('name')}
               </Button>
             </Link>
 
@@ -34,7 +34,7 @@ class NavigationMenu extends Component {
               onClick={() =>
                 this.props.setCurrentCategory(category.get('name'))}
             >
-              hey {category.get('name')}
+              {category.get('name')}
             </Button>
           </Link>
           <br />

@@ -34,10 +34,10 @@ function* editPost({ fields, callback }) {
 
   try {
     yield put({ type: GET_POSTS_SUCCESS, posts });
+    callback();
   } catch (e) {
     yield put({ type: GET_POSTS_FAILED, message: e.message });
   }
-  callback();
 }
 
 function* deletePost({ postId, callback }) {

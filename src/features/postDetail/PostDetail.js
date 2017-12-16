@@ -109,15 +109,7 @@ class PostDetail extends Component {
   };
 
   renderEditPost = () => {
-    return (
-      <Link
-        to={{
-          pathname: `/editPost/`,
-        }}
-      >
-        <Button bsStyle="primary">Edit Post</Button>
-      </Link>
-    );
+    return <Button bsStyle="primary">Edit Post</Button>;
   };
 
   renderDeletePost = () => {
@@ -129,9 +121,6 @@ class PostDetail extends Component {
   };
 
   render() {
-    console.log('====================================');
-    console.log(this.props.location);
-    console.log('====================================');
     if (!this.props.location) {
       return false;
     }

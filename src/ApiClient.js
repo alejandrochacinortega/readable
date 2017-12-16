@@ -41,7 +41,7 @@ export const editPost = post => {
     },
     data: post,
   })
-    .then(data => console.log('Dadddd ', data))
+    .then(data => {})
     .catch(error => console.log('Err ', error));
 };
 

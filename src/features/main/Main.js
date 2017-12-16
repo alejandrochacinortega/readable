@@ -9,6 +9,7 @@ import { getAllCategories, getCategory } from '../../dux/categories';
 import { getAllPosts, postVote } from '../../dux/posts';
 import { formatDate } from '../../utils/numbers';
 import NavigationMenu from '../../components/navigationMenu';
+import { setCurrentPost, deletePost } from '../../dux/posts';
 
 class Main extends Component {
   componentDidMount() {
@@ -20,6 +21,15 @@ class Main extends Component {
     });
   }
 
+  deletePost = post => {
+    this.props.deletePost(post.id, () => {
+      alert(`Post ${post.title} deleted.`);
+    });
+  };
+
+  editPost = post => {
+    this.props.setCurrentPost(post);
+  };
   render() {
     const { allCategories } = this.props;
 
@@ -104,6 +114,36 @@ class Main extends Component {
           </Link>
         ),
       },
+      {
+        Header: '',
+        accessor: '',
+        Cell: props => (
+          <Link
+            to={{
+              pathname: `/editPost/`,
+            }}
+          >
+            <Button
+              bsStyle="primary"
+              onClick={() => this.editPost(props.original)}
+            >
+              Edit Post
+            </Button>
+          </Link>
+        ),
+      },
+      {
+        Header: '',
+        accessor: '',
+        Cell: props => (
+          <Button
+            bsStyle="danger"
+            onClick={() => this.deletePost(props.original)}
+          >
+            Delete post
+          </Button>
+        ),
+      },
     ];
 
     if (allCategories.size === 0) {
@@ -136,4 +176,6 @@ export default connect(mapStateToProps, {
   getAllPosts,
   getCategory,
   postVote,
+  deletePost,
+  setCurrentPost,
 })(Main);
