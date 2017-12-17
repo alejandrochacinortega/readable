@@ -16,13 +16,35 @@ import {
   setCurrentPost,
 } from '../../dux/posts';
 import NavigationMenu from '../../components/navigationMenu';
+import getComments from '../../utils/getComments';
 
 class Category extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      allComments: false,
+    };
+  }
+  async componentDidMount() {
     const { params } = this.props.match;
     setTimeout(() => {
       this.props.getCategory(params.category);
     });
+
+    await new Promise(resolve => {
+      setTimeout(() => resolve(), 200);
+    });
+
+    const commentsStatus = await getComments(this.props.postsOfCurrentCategory);
+    let allComments = await Promise.all(commentsStatus);
+    this.setState({ allComments });
+  }
+
+  async componentWillReceiveProps(newProps) {
+    let commentsStatus = await getComments(newProps.postsOfCurrentCategory);
+    let allComments = await Promise.all(commentsStatus);
+
+    this.setState({ allComments });
   }
 
   deletePost = post => {
@@ -57,6 +79,9 @@ class Category extends Component {
 
   render() {
     const { postsOfCurrentCategory } = this.props;
+    if (!this.state.allComments) {
+      return false;
+    }
 
     if (postsOfCurrentCategory.size === 0) {
       return (
@@ -68,8 +93,6 @@ class Category extends Component {
     }
 
     const data = postsOfCurrentCategory.toJS();
-    console.log('currentCategory ', this.props.currentCategory);
-    console.log('DATA ', data);
     const columns = [
       {
         Header: 'Title',
@@ -121,6 +144,17 @@ class Category extends Component {
         Cell: props => (
           <span className="number">{formatDate(props.value)}</span>
         ),
+      },
+      {
+        Header: 'Comment',
+        accessor: '',
+        Cell: props => {
+          return (
+            <span className="number">
+              {this.state.allComments[props.index].length}
+            </span>
+          );
+        },
       },
       {
         Header: '',

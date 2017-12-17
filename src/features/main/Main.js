@@ -10,15 +10,29 @@ import { getAllPosts, postVote } from '../../dux/posts';
 import { formatDate } from '../../utils/numbers';
 import NavigationMenu from '../../components/navigationMenu';
 import { setCurrentPost, deletePost } from '../../dux/posts';
+import getComments from '../../utils/getComments';
 
 class Main extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      allComments: false,
+    };
+  }
+  async componentDidMount() {
     const { getAllCategories, getAllPosts, getCategory } = this.props;
     setTimeout(() => {
       getAllCategories();
       getAllPosts();
       getCategory(null);
     });
+
+    await new Promise(resolve => {
+      setTimeout(() => resolve(), 200);
+    });
+    const commentsStatus = await getComments(this.props.allPosts);
+    let allComments = await Promise.all(commentsStatus);
+    this.setState({ allComments });
   }
 
   deletePost = post => {
@@ -32,6 +46,9 @@ class Main extends Component {
   };
   render() {
     const { allCategories } = this.props;
+    if (!this.state.allComments) {
+      return false;
+    }
 
     const data = this.props.allPosts.toJS();
 
@@ -78,20 +95,13 @@ class Main extends Component {
         ),
       },
       {
-        Header: 'UP',
-        accessor: 'id',
-        Cell: props => {
+        Header: 'Comment',
+        accessor: '',
+        Cell: props => (
           <span className="number">
-            <Link
-              to={{
-                pathname: `/editPost/`,
-              }}
-            >
-              <Button bsStyle="primary">Edit Post</Button>
-            </Link>
-            );
-          </span>;
-        },
+            {this.state.allComments[props.index].length}
+          </span>
+        ),
       },
       {
         Header: 'Created',

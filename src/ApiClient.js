@@ -82,6 +82,20 @@ export const getCommentsByPost = id => {
   }).then(res => res.json());
 };
 
+// export const getCommentsByPost = id => {
+//   axios({
+//     method: 'GET',
+//     url: `${ROOT_URL}/posts/${id}/comments`,
+//     headers: {
+//       ...headers,
+//       'Content-Type': 'application/json',
+//     },
+//     data: id,
+//   });
+//   // .then(data => console.log('Dadddd ', data))
+//   // .catch(error => console.log('Err ', error));
+// };
+
 export const addNewComment = comment => {
   axios({
     method: 'POST',
